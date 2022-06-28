@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Permanent Marker', cursive;
+}
+
+body {
+  padding: 1rem;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 330px;
+  width: 330px;
+  border: 1px solid black;
+  margin: 0 auto;
+  margin-top: 4rem;
+}
+
+.gameboard-tile {
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+}
+
+@media screen and (min-width: 900px) {
+  .gameboard {
+    width: 500px;
+    height: 500px;
+  }
+}
