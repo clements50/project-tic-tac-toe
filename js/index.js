@@ -1,5 +1,5 @@
 const gameBoard = (function createGameBoard() {
-  const board = ['1', '3', '4', '', '', '', '', '', ''];
+  const board = ['', '', '', '', '', '', '', '', ''];
   const boardTiles = document.querySelectorAll('.gameboard-tile');
 
   const renderGameBoard = function () {
@@ -38,11 +38,8 @@ const game = (function () {
         renderGameBoard();
         changePlayer();
         tile.removeEventListener('click', tileListener);
-        console.log();
       });
     });
-
-    
   };
 
   return { playerMoves };
@@ -51,4 +48,3 @@ const game = (function () {
 const jeff = game;
 
 jeff.playerMoves();
-console.log(gameBoard.board[(0, 1, 2)]);
