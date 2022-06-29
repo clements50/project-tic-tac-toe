@@ -42,7 +42,8 @@ const displayController = (function () {
           console.log(winner);
         }
         if (spotsLeft < 1) {
-          console.log('tie');
+          const winnerMessage = document.querySelector('.winner-message');
+          winnerMessage.textContent = 'Its A Tie'
         }
       });
     });
@@ -65,7 +66,8 @@ const displayController = (function () {
           gameBoard.board[combo[1]] === currentPlayer.playerSymbol &&
           gameBoard.board[combo[2]] === currentPlayer.playerSymbol
         ) {
-          console.log(`${currentPlayer.playerName} wins!`);
+          const winnerMessage = document.querySelector('.winner-message');
+          winnerMessage.textContent = `${currentPlayer.playerName} Wins !`
           winner = true;
         }
       });
@@ -76,3 +78,12 @@ const displayController = (function () {
 })();
 
 displayController.placeMark();
+
+const playBtn = document.querySelector('.play-btn');
+const playGameContainer = document.querySelector('.playgame');
+const gameboardContainer = document.querySelector('.gameboard');
+
+playBtn.addEventListener('click', function() {
+  playGameContainer.style.display = 'none';
+  gameboardContainer.style.display = 'grid';
+})

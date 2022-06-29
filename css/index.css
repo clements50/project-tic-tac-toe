@@ -6,18 +6,23 @@
 }
 
 body {
-  padding: 1rem;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 }
 
 .gameboard {
   display: grid;
+  display: none;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   height: 330px;
   width: 330px;
-  border: 1px solid black;
   margin: 0 auto;
-  margin-top: 4rem;
+  gap: 1rem;
 }
 
 .gameboard-tile {
@@ -26,6 +31,26 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 3rem;
+  border-radius: 1rem;
+}
+
+.playgame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 2rem;
+  font-size: 1.4rem;
+} 
+
+.playgame button {
+  font-size: 1.5rem;
+  padding: 6px;
+}
+
+.winner-message {
+  font-size: 2rem;
 }
 
 @media screen and (min-width: 900px) {
