@@ -1,50 +1,78 @@
+'use strict';
+
 const gameBoard = (function createGameBoard() {
   const board = ['', '', '', '', '', '', '', '', ''];
-  const boardTiles = document.querySelectorAll('.gameboard-tile');
+  const tiles = document.querySelectorAll('.gameboard-tile');
 
-  const renderGameBoard = function () {
-    boardTiles.forEach((tile, i) => {
+  const renderBoard = function () {
+    tiles.forEach((tile, i) => {
       tile.textContent = board[i];
     });
   };
 
-  return { board, boardTiles, renderGameBoard };
+  return { board, tiles, renderBoard };
 })();
 
-const playerX = 'X';
-const playerO = 'O';
-let currentPlayer = playerX;
-
-const players = function () {
-  const changePlayer = function () {
-    currentPlayer === playerX
-      ? (currentPlayer = playerO)
-      : (currentPlayer = playerX);
-  };
-
-  return { changePlayer };
+const players = function (playerName, playerSymbol) {
+  return { playerName, playerSymbol };
 };
 
-const game = (function () {
-  // allows me to inheriate from the gameboard module using object destructiring
-  const { board, boardTiles, renderGameBoard } = gameBoard;
-  const { changePlayer } = players();
+const displayController = (function () {
+  const playerOne = players('Chris', 'X');
+  const playerTwo = players('Orianna', 'O');
+  let currentPlayer = playerOne;
 
-  const playerMoves = function () {
-    boardTiles.forEach((tile) => {
-      tile.addEventListener('click', function tileListener() {
-        const tileIndex = tile.dataset.index;
-        board.splice(tileIndex, 1, currentPlayer);
-        renderGameBoard();
-        changePlayer();
-        tile.removeEventListener('click', tileListener);
-      });
-    });
+  let winner = false;
+  let spotsLeft = 9;
+
+  const turn = function () {
+    currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
   };
 
-  return { playerMoves };
+  const placeMark = function () {
+    gameBoard.tiles.forEach((tile, i) => {
+      tile.addEventListener('click', function tileEvent() {
+        if (tile.textContent === '' && winner != true) {
+          spotsLeft -= 1;
+          const tileDataAttr = tile.dataset.index;
+          gameBoard.board.splice(tileDataAttr, 1, currentPlayer.playerSymbol);
+          gameBoard.renderBoard();
+          checkWinner();
+          turn();
+          console.log(winner);
+        }
+        if (spotsLeft < 1) {
+          console.log('tie');
+        }
+      });
+    });
+
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    function checkWinner() {
+      winningCombinations.forEach((combo) => {
+        if (
+          gameBoard.board[combo[0]] === currentPlayer.playerSymbol &&
+          gameBoard.board[combo[1]] === currentPlayer.playerSymbol &&
+          gameBoard.board[combo[2]] === currentPlayer.playerSymbol
+        ) {
+          console.log(`${currentPlayer.playerName} wins!`);
+          winner = true;
+        }
+      });
+    }
+  };
+
+  return { placeMark };
 })();
 
-const jeff = game;
-
-jeff.playerMoves();
+displayController.placeMark();
